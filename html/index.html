@@ -9,9 +9,6 @@
                 background-color: #85b2b8;
                 color: #fff;
             }
-            img {
-                max-width: 70px;
-            }
             div {
                 text-align: center;
             }
@@ -37,7 +34,7 @@
     <div id="logo">
         <div id="desc">
             <br><br><br>
-            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text.png?height=201&width=289" alt="Bink Logo" style="display: center;" >
+            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text_white.png?height=133&width=200" alt="Bink Logo" style="display: center;" >
             <br>
             <p class="desc">
                 Tap the button below on your<br>mobile device to access Bink
@@ -51,7 +48,7 @@
             s=location.toString().split('?');
             s=s[1].split('&');
             for(i=0;i<s.length;i++){u=s[i].split('=');urlp[u[0]]=u[1];}
-            destination='bink://?token='.concat(urlp['token'])
+            destination='bink://magiclink?token='.concat(urlp['token'])
             fallback_destination='https://bink.com/shoppers/#app'
             function redirect() {
                 window.location.href = destination;
