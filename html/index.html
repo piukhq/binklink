@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Launch Bink</title>
+        <style>
+            body {
+                background-color: #85b2b8;
+                color: #fff;
+            }
+            img {
+                max-width: 70px;
+            }
+            div {
+                text-align: center;
+            }
+            #launch {
+                font-size: 16pt;
+                color: #fff;
+                background: #1a4b53;
+                border-radius: 4px;
+                padding: 12px 20px 14px;
+                box-shadow: none;
+            }
+            .desc {
+                padding: 20px;
+                font-size: 18px;
+                line-height: 24px;
+            }
+            * {
+                font-family: Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="logo">
+        <div id="desc">
+            <br><br><br>
+            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text.png?height=201&width=289" alt="Bink Logo" style="display: center;" >
+            <br>
+            <p class="desc">
+                Tap the button below on your<br>mobile device to access Bink
+            </p>
+            <br>
+            <a id="launch">Continue</a>
+        </div>
+    </div>
+        <script>
+            urlp=[];
+            s=location.toString().split('?');
+            s=s[1].split('&');
+            for(i=0;i<s.length;i++){u=s[i].split('=');urlp[u[0]]=u[1];}
+            destination='bink://?token='.concat(urlp['token'])
+            fallback_destination='https://bink.com/shoppers/#app'
+            function redirect() {
+                window.location.href = destination;
+                setTimeout(function() {
+                        // Link to the App Store should go here -- only fires if deep link fails
+                        window.location = fallback_destination;
+                }, 500);
+            }
+            var el = document.getElementById("launch");
+            if (el.addEventListener)
+                el.addEventListener("click", redirect, false);
+            else if (el.attachEvent)
+                el.attachEvent('onclick', redirect);
+        </script>
+    </body>
+</html>
