@@ -1,0 +1,34 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "19 15 2 * *"
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Generate Container Image Tag
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H%M%SZ')"
+      - name: Auth with ACR
+        uses: docker/login-action@v1
+        with:
+          registry: binkcore.azurecr.io
+          username: binkcore
+          password: ${{ secrets.ACR_BINKCORE_PASSWORD }}
+      - name: Build and Push Container
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            binkcore.azurecr.io/binklink:${{ steps.date.outputs.date }}
+            binkcore.azurecr.io/binklink:latest
