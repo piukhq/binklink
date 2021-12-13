@@ -6,7 +6,7 @@
         <title>Launch Bink</title>
         <style>
             body {
-                background-color: #85b2b8;
+                background-color: #1a4b53;
                 color: #fff;
             }
             div {
@@ -15,18 +15,35 @@
             #launch {
                 font-size: 16pt;
                 color: #fff;
-                background: #1a4b53;
+                background: #0b2e33;
                 border-radius: 4px;
                 padding: 12px 20px 14px;
                 box-shadow: none;
             }
             .desc {
                 padding: 20px;
-                font-size: 18px;
+                font-size: 15px;
                 line-height: 24px;
             }
             * {
                 font-family: Helvetica, sans-serif;
+            }
+            #web-dev {
+                font-size: 13pt;
+                color: #fff;
+                border-radius: 4px;
+                padding: 12px 20px 14px;
+                box-shadow: none;
+            }
+            #web-staging {
+                font-size: 13pt;
+                color: #fff;
+                border-radius: 4px;
+                padding: 12px 20px 14px;
+                box-shadow: none;
+            }
+            #divide {
+                color: rgb(214, 22, 22);
             }
         </style>
     </head>
@@ -34,13 +51,21 @@
     <div id="logo">
         <div id="desc">
             <br><br><br>
-            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text_white.png?height=133&width=200" alt="Bink Logo" style="display: center;" >
-            <br>
+            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text_white.png" alt="Bink Logo" style="display: center;width: 200px;height: auto" >
             <p class="desc">
-                Tap the button below on your<br>mobile device to access Bink
+                <b>Tap</b> the button below on your <b>iOS</b> or <b>Android</b> device to access the Bink app
             </p>
             <br>
             <a id="launch">Continue</a>
+            <br><br><br><br><br><br>
+            <hr style="width:50%;color:rgb(255, 255, 255)">
+            <p class="desc">
+                <b>Alternatively</b> click the button below to access our new Web version of the Bink Loyalty & Rewards Wallet
+            </p>
+            <a id="web-dev">Web - Open in Dev</a>
+            <br><br><br>
+            <a id="web-staging">Web - Open in Staging</a>
+            <br><br><br><br><br><br>
         </div>
     </div>
         <script>
@@ -48,20 +73,41 @@
             s=location.toString().split('?');
             s=s[1].split('&');
             for(i=0;i<s.length;i++){u=s[i].split('=');urlp[u[0]]=u[1];}
-            destination='bink://magiclink?token='.concat(urlp['token'])
             fallback_destination='https://bink.com/shoppers/#app'
-            function redirect() {
+            
+            function redirect(path) {
+                if (path == "app")
+                    destination='bink://magiclink?token='.concat(urlp['token']);
+                else if (path == "web-dev")
+                    destination='https://web.staging.gb.bink.com/staging/bink/?magic-link='.concat(urlp['token']);
+                else if (path == "web-staging")
+                    destination='https://web.dev.gb.bink.com/develop/bink/?magic-link='.concat(urlp['token']);
+
                 window.location.href = destination;
                 setTimeout(function() {
                         // Link to the App Store should go here -- only fires if deep link fails
                         window.location = fallback_destination;
                 }, 500);
             }
-            var el = document.getElementById("launch");
-            if (el.addEventListener)
-                el.addEventListener("click", redirect, false);
+            var appButton = document.getElementById("launch");
+            var devButton = document.getElementById("web-dev");
+            var stagingButton = document.getElementById("web-staging");
+
+            if (appButton.addEventListener)
+                appButton.addEventListener("click", redirect(app), false);
             else if (el.attachEvent)
-                el.attachEvent('onclick', redirect);
+                appButton.attachEvent('onclick', redirect(app));
+
+            if (devButton.addEventListener)
+                devButton.addEventListener("click", redirect(web-dev), false);
+            else if (el.attachEvent)
+                devButton.attachEvent('onclick', redirect(web-dev));
+
+            if (stagingButton.addEventListener)
+                stagingButton.addEventListener("click", redirect(web-staging), false);
+            else if (el.attachEvent)
+                stagingButton.attachEvent('onclick', redirect(web-staging));
+
         </script>
     </body>
 </html>
