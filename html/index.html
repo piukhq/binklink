@@ -73,41 +73,40 @@
             s=location.toString().split('?');
             s=s[1].split('&');
             for(i=0;i<s.length;i++){u=s[i].split('=');urlp[u[0]]=u[1];}
-            fallback_destination='https://bink.com/shoppers/#app'
-            
+
+            let elements = ["launch", "web-dev", "web-staging"];
+
+            elements.forEach(element => {
+                let button = document.getElementById(element)
+
+                if (button.addEventListener)
+                    button.addEventListener('click', function() {
+                        redirect(element)
+                    }, false);
+                else if (button.attachEvent)
+                    button.attachEvent('onclick', function() {
+                    redirect(element)
+                });
+            });
+                        
             function redirect(path) {
-                if (path == "app")
+                
+                if (path === "launch") {
                     destination='bink://magiclink?token='.concat(urlp['token']);
-                else if (path == "web-dev")
+                    fallback_destination='https://bink.com/shoppers/#app';
+                } else if (path === "web-staging")
                     destination='https://web.staging.gb.bink.com/staging/bink/?magic-link='.concat(urlp['token']);
-                else if (path == "web-staging")
+                else if (path === "web-dev")
                     destination='https://web.dev.gb.bink.com/develop/bink/?magic-link='.concat(urlp['token']);
 
                 window.location.href = destination;
                 setTimeout(function() {
                         // Link to the App Store should go here -- only fires if deep link fails
-                        window.location = fallback_destination;
+                        if (fallback_destination) {
+                            window.location = fallback_destination;
+                        }
                 }, 500);
             }
-            var appButton = document.getElementById("launch");
-            var devButton = document.getElementById("web-dev");
-            var stagingButton = document.getElementById("web-staging");
-
-            if (appButton.addEventListener)
-                appButton.addEventListener("click", redirect(app), false);
-            else if (el.attachEvent)
-                appButton.attachEvent('onclick', redirect(app));
-
-            if (devButton.addEventListener)
-                devButton.addEventListener("click", redirect(web-dev), false);
-            else if (el.attachEvent)
-                devButton.attachEvent('onclick', redirect(web-dev));
-
-            if (stagingButton.addEventListener)
-                stagingButton.addEventListener("click", redirect(web-staging), false);
-            else if (el.attachEvent)
-                stagingButton.attachEvent('onclick', redirect(web-staging));
-
         </script>
     </body>
 </html>
