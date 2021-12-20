@@ -6,27 +6,41 @@
         <title>Launch Bink</title>
         <style>
             body {
-                background-color: #85b2b8;
+                background-color: #1a4b53;
                 color: #fff;
             }
             div {
                 text-align: center;
             }
-            #launch {
+            #top-button {
                 font-size: 16pt;
                 color: #fff;
-                background: #1a4b53;
+                background: #0b2e33;
                 border-radius: 4px;
                 padding: 12px 20px 14px;
                 box-shadow: none;
             }
-            .desc {
-                padding: 20px;
-                font-size: 18px;
+            #desc-top {
+                padding: 10px;
+                font-size: 15px;
+                line-height: 21x;
+            }
+            #desc-bottom {
+                font-size: 15px;
                 line-height: 24px;
             }
             * {
                 font-family: Helvetica, sans-serif;
+            }
+            #bottom-button {
+                font-size: 16pt;
+                color: #fff;
+                border-radius: 4px;
+                margin-top: 30px;
+                box-shadow: none;
+            }
+            #divide {
+                color: rgb(214, 22, 22);
             }
         </style>
     </head>
@@ -34,13 +48,28 @@
     <div id="logo">
         <div id="desc">
             <br><br><br>
-            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text_white.png?height=133&width=200" alt="Bink Logo" style="display: center;" >
+            <img src="https://api.gb.bink.com/content/media/logos/bink_with_text_white.png" alt="Bink Logo" style="display: center;width: 200px;height: auto" >
             <br>
-            <p class="desc">
-                Tap the button below on your<br>mobile device to access Bink
+            <br>
+            <svg id="mob-svg" width="237px" height="200">
+            </svg>
+            <p id="desc-top">
+                <b>Tap</b> the button below on your <b>iOS</b> or <b>Android</b> device to access the Bink app
             </p>
             <br>
-            <a id="launch">Continue</a>
+            <a id="top-button">Continue</a>
+            <br><br><br><br><br><br>
+            <hr style="width:60%;color:rgb(255, 255, 255)">
+            <br><br>
+
+            <svg id="pc-svg" width="237px" height="200px" viewBox="0 0 237 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            </svg>
+            <p id="desc-bottom">
+                <b>Alternatively</b> click the button below to access our new Web version of the Bink Loyalty & Rewards Wallet
+            </p>
+            <br><br>
+            <a id="bottom-button">Launch Web</a>
+            <br><br><br><br><br><br>
         </div>
     </div>
         <script>
@@ -48,20 +77,70 @@
             s=location.toString().split('?');
             s=s[1].split('&');
             for(i=0;i<s.length;i++){u=s[i].split('=');urlp[u[0]]=u[1];}
-            destination='bink://magiclink?token='.concat(urlp['token'])
-            fallback_destination='https://bink.com/shoppers/#app'
-            function redirect() {
+
+            function mapToButton(mapping) {
+                mapping.forEach(element => {
+                    let button = document.getElementById(element.location)
+
+                    if (button.addEventListener)
+                        button.addEventListener('click', function() {
+                            redirect(element.path)
+                        }, false);
+                    else if (button.attachEvent)
+                        button.attachEvent('onclick', function() {
+                        redirect(element.path)
+                    });
+                });
+            }
+                        
+            function redirect(path) {
+                if (path === "app") {
+                    destination='bink://magiclink?token='.concat(urlp['token']);
+                    fallback_destination='https://bink.com/shoppers/#app';
+                } else if (path === "web")
+                    destination='https://wallet.gb.bink.com/?magic-link='.concat(urlp['token']);
+
                 window.location.href = destination;
                 setTimeout(function() {
                         // Link to the App Store should go here -- only fires if deep link fails
-                        window.location = fallback_destination;
+                        if (fallback_destination) {
+                            window.location = fallback_destination;
+                        }
                 }, 500);
             }
-            var el = document.getElementById("launch");
-            if (el.addEventListener)
-                el.addEventListener("click", redirect, false);
-            else if (el.attachEvent)
-                el.attachEvent('onclick', redirect);
+
+            document.addEventListener('DOMContentLoaded', function(event) {
+
+                mobileText = "<b>Tap</b> the button below on your <b>iOS</b> or <b>Android</b> device to access the Bink app";
+                webText = "<b>Click</b> the button below to access the Web version of the Bink Loyalty & Rewards Wallet";
+                pcSvg =  "<g id=\"pc\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><path d=\"M20,42 L152,42 C156.418278,42 160,45.581722 160,50 L160,130 C160,134.418278 156.418278,138 152,138 L20,138 C15.581722,138 12,134.418278 12,130 L12,50 C12,45.581722 15.581722,42 20,42 Z M86.5,136.5 L86.5,154.5 M64.5,156.5 L107.5,156.5\" id=\"Combined-Shape\" stroke=\"#FFFFFF\" stroke-width=\"6\"></path><rect id=\"Rectangle\" stroke=\"#FFFFFF\" stroke-width=\"6\" x=\"174\" y=\"42\" width=\"52\" height=\"115\" rx=\"8\"></rect><circle id=\"Oval\" stroke=\"#FFFFFF\" stroke-width=\"2\" cx=\"200\" cy=\"124\" r=\"6\"></circle><line x1=\"185.5\" y1=\"57.5\" x2=\"214.5\" y2=\"57.5\" id=\"Line-3\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"square\"></line></g>"
+                mobSvg = "<g id=\"mob\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><rect id=\"Rectangle\" stroke=\"#FFFFFF\" stroke-width=\"6\" x=\"86\" y=\"34\" width=\"65\" height=\"121\" rx=\"11\"></rect><line x1=\"110.5\" y1=\"41.5\" x2=\"126.5\" y2=\"41.5\" id=\"Line-Copy\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"square\"></line></g>"
+
+                if(/Android|iPhone/i.test(navigator.userAgent)) {
+                    topText = mobileText
+                    bottomText = "Alternatively " + webText
+                    bottomButtonText = "Launch Web"
+                    mapping = [{"path":"app", "location":"top-button"}, {"path":"web", "location":"bottom-button"}];
+                    topSvg = mobSvg
+                    bottomSvg = pcSvg
+                } else {
+                    topText = webText
+                    bottomText = "Alternatively " + mobileText
+                    bottomButtonText = "Launch App"
+                    mapping = [{"path":"web", "location":"top-button"}, {"path":"app", "location":"bottom-button"}];
+                    topSvg = pcSvg
+                    bottomSvg = mobSvg
+                }
+
+                document.getElementById("mob-svg").innerHTML = topSvg
+                document.getElementById("desc-top").innerHTML = topText
+
+                document.getElementById("pc-svg").innerHTML = bottomSvg
+                document.getElementById("desc-bottom").innerHTML = bottomText
+                document.getElementById("bottom-button").innerHTML = bottomButtonText
+
+                mapToButton(mapping)
+            })
         </script>
     </body>
 </html>
