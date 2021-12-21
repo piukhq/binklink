@@ -98,9 +98,9 @@
                     destination='bink://magiclink?token='.concat(urlp['token']);
                     fallback_destination='https://bink.com/shoppers/#app';
                 } else if (path === "web-staging")
-                    destination='https://web.staging.gb.bink.com/staging/bink/?magic-link='.concat(urlp['token']);
+                    destination='https://wallet.staging.gb.bink.com/?magic-link='.concat(urlp['token']);
                 else if (path === "web-dev")
-                    destination='https://web.dev.gb.bink.com/develop/bink/?magic-link='.concat(urlp['token']);
+                    destination='https://wallet.dev.gb.bink.com/?magic-link='.concat(urlp['token']);
 
                 window.location.href = destination;
                 setTimeout(function() {
