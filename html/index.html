@@ -97,10 +97,8 @@
                 if (path === "app") {
                     destination='bink://magiclink?token='.concat(urlp['token']);
                     fallback_destination='https://bink.com/shoppers/#app';
-                } else if (path === "web-staging")
-                    destination='https://wallet.staging.gb.bink.com/?magic-link='.concat(urlp['token']);
-                else if (path === "web-dev")
-                    destination='https://wallet.dev.gb.bink.com/?magic-link='.concat(urlp['token']);
+                } else if (path === "web")
+                     destination='https://wallet.gb.bink.com/?magic-link='.concat(urlp['token']);
 
                 window.location.href = destination;
                 setTimeout(function() {
@@ -122,7 +120,7 @@
                     topText = mobileText
                     // bottomText = "Alternatively " + webText
                     // bottomButtonText = "Launch Web"
-                    mapping = [{"path":"app", "location":"top-button"}, {"path":"web-staging", "location":"bottom-button"}];
+                    mapping = [{"path":"app", "location":"top-button"}];
                     topSvg = mobSvg
                     bottomSvg = pcSvg
                 // } else {
