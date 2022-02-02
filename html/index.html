@@ -59,17 +59,17 @@
             <br>
             <a id="top-button">Continue</a>
             <br><br><br><br><br><br>
-            <hr style="width:60%;color:rgb(255, 255, 255)">
-            <br><br>
+            <!-- <hr style="width:60%;color:rgb(255, 255, 255)"> -->
+            <!-- <br><br> -->
 
-            <svg id="pc-svg" width="237px" height="200px" viewBox="0 0 237 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            </svg>
-            <p id="desc-bottom">
-                <b>Alternatively</b> click the button below to access our new Web version of the Bink Loyalty & Rewards Wallet
-            </p>
-            <br><br>
-            <a id="bottom-button">Launch Web</a>
-            <br><br><br><br><br><br>
+            <!-- <svg id="pc-svg" width="237px" height="200px" viewBox="0 0 237 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> -->
+            <!-- </svg> -->
+            <!-- <p id="desc-bottom"> -->
+                <!-- <b>Alternatively</b> click the button below to access our new Web version of the Bink Loyalty & Rewards Wallet -->
+            <!-- </p> -->
+            <!-- <br><br> -->
+            <!-- <a id="bottom-button">Launch Web</a> -->
+            <!-- <br><br><br><br><br><br> -->
         </div>
     </div>
         <script>
@@ -116,28 +116,28 @@
                 pcSvg =  "<g id=\"pc\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><path d=\"M20,42 L152,42 C156.418278,42 160,45.581722 160,50 L160,130 C160,134.418278 156.418278,138 152,138 L20,138 C15.581722,138 12,134.418278 12,130 L12,50 C12,45.581722 15.581722,42 20,42 Z M86.5,136.5 L86.5,154.5 M64.5,156.5 L107.5,156.5\" id=\"Combined-Shape\" stroke=\"#FFFFFF\" stroke-width=\"6\"></path><rect id=\"Rectangle\" stroke=\"#FFFFFF\" stroke-width=\"6\" x=\"174\" y=\"42\" width=\"52\" height=\"115\" rx=\"8\"></rect><circle id=\"Oval\" stroke=\"#FFFFFF\" stroke-width=\"2\" cx=\"200\" cy=\"124\" r=\"6\"></circle><line x1=\"185.5\" y1=\"57.5\" x2=\"214.5\" y2=\"57.5\" id=\"Line-3\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"square\"></line></g>"
                 mobSvg = "<g id=\"mob\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><rect id=\"Rectangle\" stroke=\"#FFFFFF\" stroke-width=\"6\" x=\"86\" y=\"34\" width=\"65\" height=\"121\" rx=\"11\"></rect><line x1=\"110.5\" y1=\"41.5\" x2=\"126.5\" y2=\"41.5\" id=\"Line-Copy\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"square\"></line></g>"
 
-                if(/Android|iPhone/i.test(navigator.userAgent)) {
+                // if(/Android|iPhone/i.test(navigator.userAgent)) {
                     topText = mobileText
-                    bottomText = "Alternatively " + webText
-                    bottomButtonText = "Launch Web"
-                    mapping = [{"path":"app", "location":"top-button"}, {"path":"web", "location":"bottom-button"}];
+                    // bottomText = "Alternatively " + webText
+                    // bottomButtonText = "Launch Web"
+                    mapping = [{"path":"app", "location":"top-button"}];
                     topSvg = mobSvg
                     bottomSvg = pcSvg
-                } else {
-                    topText = webText
-                    bottomText = "Alternatively " + mobileText
-                    bottomButtonText = "Launch App"
-                    mapping = [{"path":"web", "location":"top-button"}, {"path":"app", "location":"bottom-button"}];
-                    topSvg = pcSvg
-                    bottomSvg = mobSvg
-                }
+                // } else {
+                    // topText = webText
+                    // bottomText = "Alternatively " + mobileText
+                    // bottomButtonText = "Launch App"
+                    // mapping = [{"path":"web-staging", "location":"top-button"}, {"path":"app", "location":"bottom-button"}];
+                    // topSvg = pcSvg
+                    // bottomSvg = mobSvg
+                // }
 
                 document.getElementById("mob-svg").innerHTML = topSvg
                 document.getElementById("desc-top").innerHTML = topText
 
-                document.getElementById("pc-svg").innerHTML = bottomSvg
-                document.getElementById("desc-bottom").innerHTML = bottomText
-                document.getElementById("bottom-button").innerHTML = bottomButtonText
+                // document.getElementById("pc-svg").innerHTML = bottomSvg
+                // document.getElementById("desc-bottom").innerHTML = bottomText
+                // document.getElementById("bottom-button").innerHTML = bottomButtonText
 
                 mapToButton(mapping)
             })
